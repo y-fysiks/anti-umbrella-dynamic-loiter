@@ -1,0 +1,6 @@
+dronepid_node:
+  ros_paramters:
+    kp: 0.1
+    ki: 0.1
+    kd: 0.1
+    
