@@ -20,7 +20,7 @@ namespace anti_umbrella {
 
         void DronePIDNode::initSubscribers() {
             apriltag_sub_ = this->create_subscription<apriltag_msgs::msg::AprilTagDetectionArray>(
-                "apriltag_pose", 10, std::bind(&DronePIDNode::apriltagCB, this, std::placeholders::_1));
+                "/detections", 10, std::bind(&DronePIDNode::apriltagCB, this, std::placeholders::_1));
         }
 
         void DronePIDNode::initPublishers() {
