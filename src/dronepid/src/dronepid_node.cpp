@@ -19,20 +19,25 @@ namespace anti_umbrella {
         }
 
         void DronePIDNode::initSubscribers() {
-            // apriltag_sub_ = this->create_subscription<apriltag_msgs::msg::AprilTagDetectionArray>(
-            //     "apriltag_pose", 10, std::bind(&DronePIDNode::apriltagCB, this, std::placeholders::_1));
+            apriltag_sub_ = this->create_subscription<apriltag_msgs::msg::AprilTagDetectionArray>(
+                "apriltag_pose", 10, std::bind(&DronePIDNode::apriltagCB, this, std::placeholders::_1));
         }
 
         void DronePIDNode::initPublishers() {
-            velxy_pub_ = this->create_publisher<geometry_msgs::msg::Twist>("cmd_vel", 10);
+            velxy_pub_ = this->create_publisher<geometry_msgs::msg::Twist>("desd_vel", 10);
         }
 
         void DronePIDNode::initTimers() {
             pid_timer_ = this->create_wall_timer(std::chrono::milliseconds(50), std::bind(&DronePIDNode::pidTimerCB, this));
         }
 
-        void DronePIDNode::apriltagCB(const geometry_msgs::msg::Twist::SharedPtr msg) {
+        void DronePIDNode::apriltagCB(const apriltag_msgs::msg::AprilTagDetectionArray::SharedPtr msg) {
             RCLCPP_INFO(this->get_logger(), "Received AprilTag Pose");
+
+            for (auto detection : msg->detections) {
+                RCLCPP_INFO(this->get_logger(), "Pose: %f, %f", detection.centre.x, detection.centre.y);
+            }
+            
         }
 
         void DronePIDNode::pidTimerCB() {

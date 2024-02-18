@@ -33,7 +33,7 @@ namespace anti_umbrella {
 
                 void initTimers();
 
-                void apriltagCB(const geometry_msgs::msg::Twist::SharedPtr msg);
+                void apriltagCB(const apriltag_msgs::msg::AprilTagDetectionArray::SharedPtr msg);
 
                 void pidTimerCB();
 
