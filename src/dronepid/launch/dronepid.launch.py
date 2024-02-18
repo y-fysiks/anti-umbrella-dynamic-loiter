@@ -30,7 +30,7 @@ def generate_launch_description():
         name="apriltag_node",
         output="screen",
         emulate_tty=True,
-        parameters=[os.path.join(get_package_share_directory("apriltag_ros"), "cfg", "tags_36h11.yaml")],
+        parameters=[os.path.join(get_package_share_directory("apriltag_ros"), "apriltag_ros", "cfg", "tags_36h11.yaml")],
         remappings=[
             ("image_rect", "/image_raw"),
             ("camera_info", "/camera_info"),
