@@ -107,9 +107,6 @@ class DroneCommands(Node):
         else:
             self.get_logger().info('Invalid command')
 
-    
-   
-
 def main(args=None):
     rclpy.init(args=args)
     drone_commands = DroneCommands()
