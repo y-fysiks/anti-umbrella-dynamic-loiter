@@ -44,7 +44,7 @@ namespace anti_umbrella {
             // RCLCPP_INFO(this->get_logger(), "Received AprilTag Pose");
 
             for (auto detection : msg->detections) {
-                RCLCPP_INFO(this->get_logger(), "Pose: %f, %f", detection.centre.x, detection.centre.y);
+                // RCLCPP_INFO(this->get_logger(), "Pose: %f, %f", detection.centre.x, detection.centre.y);
 
                 apriltag_detected_ = true;
                 apriltag_timer_ = 10;
@@ -68,7 +68,7 @@ namespace anti_umbrella {
 
         void DronePIDNode::pidTimerCB() {
             double errorX = apriltag_norm_x_ - 0.5; // positive is to the right
-            double errorY = 0.5 - apriltag_norm_y_; // positive is down
+            double errorY = apriltag_norm_y_ - 0.5; // positive is down
 
             sum_errorX_ += errorX;
             sum_errorY_ += errorY;
@@ -84,6 +84,7 @@ namespace anti_umbrella {
 
             //log the velx and velY
             RCLCPP_INFO(this->get_logger(), "VelX: %f, VelY: %f", velX, velY);
+            // RCLCPP_INFO(this->get_logger(), "ErrorX: %f, ErrorY: %f", errorX, errorY);
 
             prev_errorX_ = errorX;
             prev_errorY_ = errorY;
