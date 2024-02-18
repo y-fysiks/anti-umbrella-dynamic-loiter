@@ -16,6 +16,14 @@ namespace anti_umbrella {
             this->declare_parameter("kp", 0.1);
             this->declare_parameter("ki", 0.1);
             this->declare_parameter("kd", 0.1);
+            this->declare_parameter("resX", 680);
+            this->declare_parameter("resY", 480);
+
+            kp_ = this->get_parameter("kp").as_double();
+            ki_ = this->get_parameter("ki").as_double();
+            kd_ = this->get_parameter("kd").as_double();
+            resX_ = this->get_parameter("resX").as_double();
+            resY_ = this->get_parameter("resY").as_double();
         }
 
         void DronePIDNode::initSubscribers() {
@@ -35,11 +43,18 @@ namespace anti_umbrella {
             // RCLCPP_INFO(this->get_logger(), "Received AprilTag Pose");
 
             for (auto detection : msg->detections) {
-                RCLCPP_INFO(this->get_logger(), "Pose: %f, %f", detection.centre.x, detection.centre.y);
-                RCLCPP_INFO(this->get_logger(), "Points: x1: %f, y1:%f", detection.corners[0].x, detection.corners[0].y);
-                RCLCPP_INFO(this->get_logger(), "        x2: %f, y2:%f", detection.corners[1].x, detection.corners[1].y);
-                RCLCPP_INFO(this->get_logger(), "        x3: %f, y3:%f", detection.corners[2].x, detection.corners[2].y);
-                RCLCPP_INFO(this->get_logger(), "        x4: %f, y4:%f", detection.corners[3].x, detection.corners[3].y);
+                RCLCPP_INFO(this->get_logger(), "Pose: %f, %f", detection.centre.x, detection.centre.y, detection.centre.);
+
+                apriltag_detected_ = true;
+                apriltag_timer_ = 10;
+            }
+
+            if (msg->detections.size() == 0 && apriltag_timer_ > 0) {
+                apriltag_timer_--;
+            }
+
+            if (apriltag_timer_ == 0) {
+                apriltag_detected_ = false;
             }
             
         }
