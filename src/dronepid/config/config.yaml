@@ -1,4 +1,4 @@
-/**:
+dronepid_node:
   ros_paramters:
     kp: 1.0
     ki: 0.0
