@@ -7,7 +7,7 @@ from threading import Thread
 class KeyboardListener(Node):
     def __init__(self):
         super().__init__('keyboard_listener')
-        self.publisher_ = self.create_publisher(String, '/keyboard_commands', 10)
+        self.publisher_ = self.create_publisher(String, '/dronecontrol_commands', 10)
         Thread(target=self.listen_for_keys, daemon=True).start()
 
     def publish_key(self, key):

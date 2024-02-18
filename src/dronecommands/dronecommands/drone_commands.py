@@ -36,7 +36,7 @@ class DroneCommands(Node):
 
         self.subscription = self.create_subscription(
             String,
-            '/keyboard_commands',
+            '/dronecontrol_commands',
             self.keyboard_callback,
             10)
         self.subscription
@@ -90,13 +90,17 @@ class DroneCommands(Node):
             self.get_logger().info('Publishing: "%s"' %msg)
 
     def keyboard_callback(self, msg):
+        print("Received: ", msg.data)
         if msg.data == "a":
+            self.get_logger().info('Arming...')
             self.arm()
 
         elif msg.data == "g":
+            self.get_logger().info('Gudiufds...')
             self.set_mode("GUIDED")
 
         elif msg.data == "t":
+            self.get_logger().info('Taking off...')
             self.takeoff()
             
         elif msg.data == "l":
