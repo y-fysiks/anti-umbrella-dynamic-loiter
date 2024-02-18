@@ -40,5 +40,5 @@ def generate_launch_description():
 
     ld.add_action(dronepid_node)
     ld.add_action(camera_node)
-    ld.add_action(apriltag_node)
+    # ld.add_action(apriltag_node)
     return ld
