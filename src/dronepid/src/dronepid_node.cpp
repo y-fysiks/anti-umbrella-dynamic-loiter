@@ -32,10 +32,14 @@ namespace anti_umbrella {
         }
 
         void DronePIDNode::apriltagCB(const apriltag_msgs::msg::AprilTagDetectionArray::SharedPtr msg) {
-            RCLCPP_INFO(this->get_logger(), "Received AprilTag Pose");
+            // RCLCPP_INFO(this->get_logger(), "Received AprilTag Pose");
 
             for (auto detection : msg->detections) {
                 RCLCPP_INFO(this->get_logger(), "Pose: %f, %f", detection.centre.x, detection.centre.y);
+                RCLCPP_INFO(this->get_logger(), "Points: x1: %f, y1:%f", detection.corners[0].x, detection.corners[0].y);
+                RCLCPP_INFO(this->get_logger(), "        x2: %f, y2:%f", detection.corners[1].x, detection.corners[1].y);
+                RCLCPP_INFO(this->get_logger(), "        x3: %f, y3:%f", detection.corners[2].x, detection.corners[2].y);
+                RCLCPP_INFO(this->get_logger(), "        x4: %f, y4:%f", detection.corners[3].x, detection.corners[3].y);
             }
             
         }
