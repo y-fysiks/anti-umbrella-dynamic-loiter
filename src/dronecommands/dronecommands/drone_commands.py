@@ -6,6 +6,7 @@ from rclpy.node import Node
 from mavros_msgs.srv import CommandBool, SetMode, CommandTOL
 from geometry_msgs.msg import TwistStamped
 import geometry_msgs.msg
+from std_msgs.msg import String
 
 class DroneCommands(Node):
     def __init__(self):
@@ -32,6 +33,14 @@ class DroneCommands(Node):
             10
         )
         self.cmd_vel_subscription
+
+        self.subscription = self.create_subscription(
+            String,
+            '/drone_control_commands',
+            self.keyboard_callback,
+            10)
+        self.subscription
+
 
     def arm(self):
         request = CommandBool.Request()
@@ -67,27 +76,49 @@ class DroneCommands(Node):
         self.set_mode("LAND")
 
     def cmd_vel_callback(self, pidMsg):
-        msg = TwistStamped()
-        msg.twist.linear.x = pidMsg.linear.x
-        msg.twist.linear.y = pidMsg.linear.y
-        msg.twist.linear.z = pidMsg.linear.z
-        msg.twist.angular.x = pidMsg.angular.x
-        msg.twist.angular.y = pidMsg.angular.x
-        msg.twist.angular.z = pidMsg.angular.x
-        self.publisher_.publish(msg)
-        self.get_logger().info('Publishing: "%s"' %msg)
+        if self.started == True:
+            msg = TwistStamped()
+            msg.twist.linear.x = pidMsg.linear.x
+            msg.twist.linear.y = pidMsg.linear.y
+            msg.twist.linear.z = pidMsg.linear.z
+            msg.twist.angular.x = pidMsg.angular.x
+            msg.twist.angular.y = pidMsg.angular.x
+            msg.twist.angular.z = pidMsg.angular.x
+            self.publisher_.publish(msg)
+            self.get_logger().info('Publishing: "%s"' %msg)
+
+    def keyboard_callback(self, msg):
+        if msg.data == "a":
+            self.arm()
+
+        elif msg.data == "g":
+            self.set_mode("GUIDED")
+
+        elif msg.data == "t":
+            self.takeoff()
+            
+        elif msg.data == "l":
+            self.land()
+
+        elif msg.data == "s":
+            self.started == True
+
+        else:
+            self.get_logger().info('Invalid command')
+
+    
    
 
 def main(args=None):
     rclpy.init(args=args)
     drone_commands = DroneCommands()
-    drone_commands.set_mode("GUIDED")
-    drone_commands.arm()
-    time.sleep(2)
-    drone_commands.takeoff()
-    rclpy.spin(drone_commands)
-    drone_commands.destroy_node()
-    rclpy.shutdown()
+    try:
+        rclpy.spin(drone_commands)
+    except KeyboardInterrupt:
+        drone_commands.get_logger().info('Keyboard Interrupt (SIGINT)')
+    finally:
+        drone_commands.destroy_node()
+        rclpy.shutdown()
 
 if __name__ == '__main__':
     main()
