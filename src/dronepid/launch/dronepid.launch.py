@@ -24,18 +24,18 @@ def generate_launch_description():
         name="camera_node"
     )
 
-    apriltag_node = Node(
-        package="apriltag_ros",
-        executable="apriltag_node",
-        name="apriltag_node",
-        output="screen",
-        emulate_tty=True,
-        parameters=[os.path.join(get_package_share_directory("apriltag_ros"), "cfg", "tags_36h11.yaml")],
-        remappings=[
-            ("image_rect", "/image_raw"),
-            ("camera_info", "/camera_info")
-        ]
-    )
+    # apriltag_node = Node(
+    #     package="apriltag_ros",
+    #     executable="apriltag_node",
+    #     name="apriltag_node",
+    #     output="screen",
+    #     emulate_tty=True,
+    #     parameters=[os.path.join(get_package_share_directory("apriltag_ros"), "cfg", "tags_36h11.yaml")],
+    #     remappings=[
+    #         ("image_rect", "/image_raw"),
+    #         ("camera_info", "/camera_info")
+    #     ]
+    # )
     
 
     ld.add_action(dronepid_node)
