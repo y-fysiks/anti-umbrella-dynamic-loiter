@@ -1,5 +1,5 @@
 dronepid_node:
-  ros_paramters:
+  ros_parameters:
     kp: 1.0
     ki: 0.0
     kd: 0.1
