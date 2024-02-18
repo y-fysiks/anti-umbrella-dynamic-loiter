@@ -11,6 +11,7 @@
 #include <stdexcept> // std::runtime_error
 #include <string>
 #include <vector>
+#include <atomic>
 
 //Message Requirements
 #include <geometry_msgs/msg/twist.hpp>
@@ -33,14 +34,33 @@ namespace anti_umbrella {
 
                 void initTimers();
 
-                void apriltagCB(const geometry_msgs::msg::Twist::SharedPtr msg);
+                void apriltagCB(const apriltag_msgs::msg::AprilTagDetectionArray::SharedPtr msg);
 
                 void pidTimerCB();
 
                 //Global variables
 
+                double kp_;
+                double ki_;
+                double kd_;
+
+                double resX_;
+                double resY_;
+
+                std::atomic<bool> apriltag_detected_;
+
+                int apriltag_timer_ = 10;
+
+                std::atomic<double> apriltag_norm_x_; // positive is to the right
+                std::atomic<double> apriltag_norm_y_; // positive is down.
+                std::atomic<double> apriltage_rotation_rads_;
+
                 rclcpp::TimerBase::SharedPtr pid_timer_;
 
+                double sum_errorX_ = 0.0;
+                double sum_errorY_ = 0.0;
+                double prev_errorX_ = 0.0;
+                double prev_errorY_ = 0.0;
 
                 //ROS2 Publishers
                 rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr velxy_pub_;
