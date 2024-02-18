@@ -76,6 +76,9 @@ namespace anti_umbrella {
 
             double velY = kp_ * errorY + ki_ * sum_errorY_ + kd_ * (errorY - prev_errorY_);
 
+            //log the velx and velY
+            RCLCPP_INFO(this->get_logger(), "VelX: %f, VelY: %f", velX, velY);
+
             prev_errorX_ = errorX;
             prev_errorY_ = errorY;
 
