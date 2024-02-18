@@ -1,6 +1,8 @@
 import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
+from launch.actions import DeclareLaunchArgument
+from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
 def generate_launch_description():
@@ -28,7 +30,7 @@ def generate_launch_description():
         name="apriltag_node",
         output="screen",
         emulate_tty=True,
-        parameters=["from=`ros2 pkg prefix apriltag_ros`/share/apriltag_ros/cfg/tags_36h11.yaml"],
+        parameters=[LaunchConfiguration("`ros2 pkg prefix apriltag_ros`/share/apriltag_ros/cfg/tags_36h11.yaml")],
         remappings=[
             ("image_rect", "/image_raw"),
             ("camera_info", "/camera_info"),
