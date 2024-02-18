@@ -78,7 +78,7 @@ install(
 
 install(
   DIRECTORY config/
-  DESTINATION share/config/${PROJECT_NAME}
+  DESTINATION share/${PROJECT_NAME}
 )
 
 if(BUILD_TESTING)

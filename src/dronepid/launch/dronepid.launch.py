@@ -7,7 +7,7 @@ from launch_ros.actions import Node
 def generate_launch_description():
     ld = LaunchDescription()
     config_path = os.path.join(
-        get_package_share_directory("dronepid"), "config", "config.yaml"
+        get_package_share_directory("dronepid"), "config.yaml"
     )
 
     dronepid_node = Node(
