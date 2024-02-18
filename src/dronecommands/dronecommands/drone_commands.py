@@ -31,7 +31,7 @@ class DroneCommands(Node):
             self.cmd_vel_callback,
             10
         )
-        #self.cmd_vel_subscription
+        self.cmd_vel_subscription
 
     def arm(self):
         request = CommandBool.Request()
