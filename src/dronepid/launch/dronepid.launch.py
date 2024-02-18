@@ -15,7 +15,7 @@ def generate_launch_description():
         package="dronepid",
         executable="dronepid",
         name="dronepid_node",
-        parameters=[config_path],
+        parameters=[config_path]
     )
 
     camera_node = Node(
