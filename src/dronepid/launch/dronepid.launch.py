@@ -21,7 +21,7 @@ def generate_launch_description():
 
     camera_node = Node(
         package="v4l2_camera",
-        executable="v4l2_camera_node"
+        executable="v4l2_camera_node",
         name="camera_node"
     )
 
