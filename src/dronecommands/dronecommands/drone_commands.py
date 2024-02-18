@@ -98,6 +98,7 @@ class DroneCommands(Node):
             self.takeoff()
             
         elif msg.data == "l":
+            self.started == False
             self.land()
 
         elif msg.data == "s":
