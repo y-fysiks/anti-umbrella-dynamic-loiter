@@ -13,8 +13,6 @@ def generate_launch_description():
         package="dronepid",
         executable="dronepid",
         name="dronepid_node",
-        output="screen",
-        emulate_tty=True,
         parameters=[config_path],
     )
 
