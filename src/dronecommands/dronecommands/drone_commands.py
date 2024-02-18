@@ -36,7 +36,7 @@ class DroneCommands(Node):
 
         self.subscription = self.create_subscription(
             String,
-            '/drone_control_commands',
+            '/keyboard_commands',
             self.keyboard_callback,
             10)
         self.subscription
