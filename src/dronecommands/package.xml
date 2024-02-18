@@ -4,13 +4,13 @@
   <name>dronecommands</name>
   <version>0.0.0</version>
   <description>TODO: Package description</description>
-  <maintainer email="yubo0809@outlook.com">yubo</maintainer>
-  <license>GPL-3.0-only</license>
+  <maintainer email="tommyz2005@gmail.com">tommy</maintainer>
+  <license>TODO: License declaration</license>
 
   <depend>rclpy</depend>
-  <depend>mavros</depend>
-  <depend>python3-sshkeyboard-pip</depend>
-
+  <depend>std_msgs</depend>
+  <depend>sshkeyboard</depend>
+  
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
   <test_depend>ament_pep257</test_depend>
