@@ -39,6 +39,10 @@ namespace anti_umbrella {
 
                 //Global variables
 
+                double kp_;
+                double ki_;
+                double kd_;
+
                 rclcpp::TimerBase::SharedPtr pid_timer_;
 
 
