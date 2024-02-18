@@ -21,6 +21,8 @@ setup(
     entry_points={
         'console_scripts': [
             'drone_commands = dronecommands.drone_commands:main'
+            'keyboard_listener = dronecommands.keyboard_listener:main'
+
         ],
     },
 )
