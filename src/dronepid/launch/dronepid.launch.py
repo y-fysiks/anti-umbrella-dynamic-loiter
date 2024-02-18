@@ -31,7 +31,7 @@ def generate_launch_description():
         name="apriltag_node",
         output="screen",
         emulate_tty=True,
-        args=["--params-file `ros2 pkg prefix apriltag_ros`/share/apriltag_ros/cfg/tags_36h11.yaml"],
+        parameters=[{"file": "`ros2 pkg prefix apriltag_ros`/share/apriltag_ros/cfg/tags_36h11.yaml"}],
         remappings=[
             ("image_rect", "/image_raw"),
             ("camera_info", "/camera_info"),
