@@ -18,11 +18,11 @@ def generate_launch_description():
         parameters=[config_path]
     )
 
-    camera_node = Node(
-        package="v4l2_camera",
-        executable="v4l2_camera_node",
-        name="camera_node"
-    )
+    # camera_node = Node(
+    #     package="v4l2_camera",
+    #     executable="v4l2_camera_node",
+    #     name="camera_node"
+    # )
 
     # apriltag_node = Node(
     #     package="apriltag_ros",
@@ -39,6 +39,6 @@ def generate_launch_description():
     
 
     ld.add_action(dronepid_node)
-    ld.add_action(camera_node)
+    # ld.add_action(camera_node)
     # ld.add_action(apriltag_node)
     return ld
