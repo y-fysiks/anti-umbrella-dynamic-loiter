@@ -24,6 +24,7 @@ namespace anti_umbrella {
             kd_ = this->get_parameter("kd").as_double();
             resX_ = this->get_parameter("resX").as_double();
             resY_ = this->get_parameter("resY").as_double();
+            apriltag_detected_ = false;
         }
 
         void DronePIDNode::initSubscribers() {

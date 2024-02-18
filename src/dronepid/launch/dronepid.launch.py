@@ -19,6 +19,24 @@ def generate_launch_description():
         parameters=[config_path],
     )
 
+    camera_node = Node(
+        package="v4l2_camera",
+        executable="v4l2_camera_node"
+        name="camera_node",
+    )
+
+    apriltag_node = Node(
+        package="apriltag_ros",
+        executable="apriltag_node",
+        name="apriltag_node",
+        output="screen",
+        emulate_tty=True,
+        parameters=["--params-file `ros2 pkg prefix apriltag_ros`/share/apriltag_ros/cfg/tags_36h11.yaml"],
+        remappings=[
+            ("image_rect", "/image_raw"),
+            ("camera_info", "/camera_info"),
+        ],
+    )
     
 
     ld.add_action(dronepid_node)
