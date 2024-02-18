@@ -20,9 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'drone_commands = dronecommands.drone_commands:main'
+            'drone_commands = dronecommands.drone_commands:main',
             'keyboard_listener = dronecommands.keyboard_listener:main'
-
         ],
     },
 )

@@ -7,6 +7,9 @@ gazebo --verbose ~/ardupilot_gazebo/worlds/iris_arducopter_runway.world
 2. Run sim_vehicle.py on another terminal
 sim_vehicle.py -v ArduCopter -f gazebo-iris --console --out 127.0.0.1:14550
 
+sim_vehicle.py -v ArduCopter -f gazebo-iris --console --out 192.168.105.136:1455
+0
+
 3. 
 ros2 launch mavros apm.launch fcu_url:=udp://127.0.0.1:14550@14555
 
@@ -18,11 +21,14 @@ type "output" to see what addresses mavlink messages are sent to
 
 1. Run sim_vehicle.py and gazebo on the laptop
 
-sim_vehicle.py -v ArduCopter -f gazebo-iris --console --out raspi ip:14550
+sim_vehicle.py -v ArduCopter -f gazebo-iris --console --out 192.168.105.246:14550
 
-2. Run the ros launch command: (make sure to change ip addres to laptop's ip address since you are outputing the sim from the laptop)
+2. Run the ros launch command:
 
-ros2 launch mavros apm.launch fcu_url:=udp://192.168.105.136:14550@14555
+ros2 launch mavros apm.launch fcu_url:=udp://192.168.105.246:14550@14555
+
+ros2 run dronecommands drone_commands
+ros2 run dronecommands keyboard_listener
 
 
 ## Test flying IRL:
