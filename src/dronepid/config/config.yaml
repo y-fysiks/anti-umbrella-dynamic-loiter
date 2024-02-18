@@ -3,4 +3,7 @@ dronepid_node:
     kp: 0.1
     ki: 0.1
     kd: 0.1
+
+    resX: 640
+    resY: 480
     
