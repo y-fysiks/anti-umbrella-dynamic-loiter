@@ -14,7 +14,7 @@
 #include <atomic>
 
 //Message Requirements
-#include <geometry_msgs/msg/twist.hpp>
+#include <geometry_msgs/msg/twist_stamped.hpp>
 #include <apriltag_msgs/msg/april_tag_detection_array.hpp>
 
 
@@ -63,7 +63,7 @@ namespace anti_umbrella {
                 double prev_errorY_ = 0.0;
 
                 //ROS2 Publishers
-                rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr velxy_pub_;
+                rclcpp::Publisher<geometry_msgs::msg::TwistStamped>::SharedPtr vel_pub_;
 
                 //ROS2 Subscribers
                 rclcpp::Subscription<apriltag_msgs::msg::AprilTagDetectionArray>::SharedPtr apriltag_sub_;

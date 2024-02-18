@@ -33,7 +33,7 @@ namespace anti_umbrella {
         }
 
         void DronePIDNode::initPublishers() {
-            velxy_pub_ = this->create_publisher<geometry_msgs::msg::Twist>("desd_vel", 10);
+            vel_pub_ = this->create_publisher<geometry_msgs::msg::TwistStamped>("/mavros/setpoint_velocity/cmd_vel", 10);
         }
 
         void DronePIDNode::initTimers() {
@@ -67,7 +67,7 @@ namespace anti_umbrella {
         }
 
         void DronePIDNode::pidTimerCB() {
-            double errorX = apriltag_norm_x_ - 0.5; // positive is to the right
+            double errorX = 0.5 - apriltag_norm_x_; // positive is to the right
             double errorY = apriltag_norm_y_ - 0.5; // positive is down
 
             sum_errorX_ += errorX;
@@ -89,14 +89,16 @@ namespace anti_umbrella {
             prev_errorX_ = errorX;
             prev_errorY_ = errorY;
 
-            geometry_msgs::msg::Twist velxy;
-            velxy.linear.x = velX;
-            velxy.linear.y = velY;
-            velxy.angular.x = 0;
-            velxy.angular.y = 0;
-            velxy.angular.z = 0;
+            geometry_msgs::msg::TwistStamped velxy;
+            velxy.header.stamp = this->now();
+            velxy.header.frame_id = "base_link";
+            velxy.twist.linear.x = velX;
+            velxy.twist.linear.y = velY;
+            velxy.twist.angular.x = 0;
+            velxy.twist.angular.y = 0;
+            velxy.twist.angular.z = 0;
 
-            velxy_pub_->publish(velxy);
+            vel_pub_->publish(velxy);
         }
 
 
