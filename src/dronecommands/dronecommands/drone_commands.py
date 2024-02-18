@@ -41,6 +41,8 @@ class DroneCommands(Node):
             10)
         self.subscription
 
+        self.started = False
+
 
     def arm(self):
         request = CommandBool.Request()
