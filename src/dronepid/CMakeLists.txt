@@ -10,28 +10,60 @@ find_package(ament_cmake REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
-find_package(rclcpp REQUIRED)
-find_package(rclcpp_components REQUIRED)
-find_package(geometry_msgs REQUIRED)
-find_package(cv_bridge REQUIRED)
-find_package(std_msgs REQUIRED)
-find_package(apriltag REQUIRED)
-find_package(apriltag_msgs REQUIRED)
-find_package(apriltag_ros REQUIRED)
 
-add_executable(dronepid src/dronepid.cpp)
+set(THIS_PACKAGE_INCLUDE_DEPENDS
+  rclcpp
+  rclcpp_components
+  geometry_msgs
+  std_msgs
+  apriltag_msgs
+  apriltag
+  apriltag_ros
+  cv_bridge
+)
 
-ament_target_dependencies(dronepid rclcpp std_msgs apriltag apriltag_msgs apriltag_ros cv_bridge)
+## Find Dependencies
+foreach(DEPENDENCY IN ITEMS ${THIS_PACKAGE_INCLUDE_DEPENDS})
+  find_package(${DEPENDENCY} REQUIRED)
+endforeach()
+
+## Export Dependencies for downstream packages
+ament_export_dependencies(${THIS_PACKAGE_INCLUDE_DEPENDS})
+
+## Add Libraries and Executables
+function(add_node NODE_NAME)
+  add_library(${NODE_NAME}_library
+    src/${NODE_NAME}_node.cpp
+    # Add other source files as needed
+  )
+  ament_target_dependencies(${NODE_NAME}_library ${THIS_PACKAGE_INCLUDE_DEPENDS})
+  target_include_directories(${NODE_NAME}_library
+      PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include/${PROJECT_NAME}>)
+
+  add_executable(${NODE_NAME} src/${NODE_NAME}.cpp)
+  target_link_libraries(${NODE_NAME} ${NODE_NAME}_library)
+  ament_target_dependencies(${NODE_NAME} ${THIS_PACKAGE_INCLUDE_DEPENDS})
+  target_include_directories(${NODE_NAME}
+      PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include/${PROJECT_NAME}>)
+
+  install(TARGETS ${NODE_NAME}_library
+      ARCHIVE DESTINATION lib
+      LIBRARY DESTINATION lib
+      RUNTIME DESTINATION bin
+      INCLUDES DESTINATION include/${PROJECT_NAME})
+
+  install(TARGETS ${NODE_NAME}
+      DESTINATION lib/${PROJECT_NAME})
+endfunction()
+
+add_node(dronepid)
 
 
-target_include_directories(dronepid PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
-target_compile_features(dronepid PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
 
-install(TARGETS 
-  dronepid
-  DESTINATION lib/${PROJECT_NAME})
 
 ## Install Headers
 install(

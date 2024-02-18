@@ -14,14 +14,39 @@
 
 //Message Requirements
 #include <geometry_msgs/msg/twist.hpp>
+#include <apriltag_msgs/msg/april_tag_detection_array.hpp>
+
 
 namespace anti_umbrella {
-    class DronePID : public rclcpp::Node {
-    public:
-        DronePID();
+    namespace dronepid {
+        
+        class DronePIDNode : public rclcpp::Node {
+            public:
+                DronePIDNode();
 
-    private:
-        apriltagCB(const )
+            private:
+                void initParams();
 
-    } ;
+                void initSubscribers();
+
+                void initPublishers();
+
+                void initTimers();
+
+                void apriltagCB(const geometry_msgs::msg::Twist::SharedPtr msg);
+
+                void pidTimerCB();
+
+                //Global variables
+
+                rclcpp::TimerBase::SharedPtr pid_timer_;
+
+
+                //ROS2 Publishers
+                rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr velxy_pub_;
+
+                //ROS2 Subscribers
+                rclcpp::Subscription<apriltag_msgs::msg::AprilTagDetectionArray>::SharedPtr apriltag_sub_;
+        } ;
+    }
 }
