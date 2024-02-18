@@ -53,9 +53,14 @@ namespace anti_umbrella {
 
                 std::atomic<double> apriltag_norm_x_; // positive is to the right
                 std::atomic<double> apriltag_norm_y_; // positive is down.
+                std::atomic<double> apriltage_rotation_rads_;
 
                 rclcpp::TimerBase::SharedPtr pid_timer_;
 
+                double sum_errorX_ = 0.0;
+                double sum_errorY_ = 0.0;
+                double prev_errorX_ = 0.0;
+                double prev_errorY_ = 0.0;
 
                 //ROS2 Publishers
                 rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr velxy_pub_;
