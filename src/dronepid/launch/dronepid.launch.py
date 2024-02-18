@@ -34,7 +34,7 @@ def generate_launch_description():
         remappings=[
             ("image_rect", "/image_raw"),
             ("camera_info", "/camera_info"),
-        ],
+        ]
     )
     
 
