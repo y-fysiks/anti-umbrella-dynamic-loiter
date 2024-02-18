@@ -1,9 +1,9 @@
 dronepid_node:
   ros_paramters:
-    kp: 1
+    kp: 1.0
     ki: 0.0
     kd: 0.1
 
-    resX: 640
-    resY: 480
+    resX: 640.0
+    resY: 480.0
     

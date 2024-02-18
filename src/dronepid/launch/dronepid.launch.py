@@ -7,7 +7,7 @@ from launch_ros.actions import Node
 def generate_launch_description():
     ld = LaunchDescription()
     config_path = os.path.join(
-        get_package_share_directory("dronepid"), "config", "config.yaml"
+        get_package_share_directory("dronepid"), "config.yaml"
     )
 
     dronepid_node = Node(
@@ -18,6 +18,8 @@ def generate_launch_description():
         emulate_tty=True,
         parameters=[config_path],
     )
+
+    
 
     ld.add_action(dronepid_node)
     return ld

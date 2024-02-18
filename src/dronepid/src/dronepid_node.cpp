@@ -13,11 +13,11 @@ namespace anti_umbrella {
         }
 
         void DronePIDNode::initParams() {
-            this->declare_parameter("kp", 1);
+            this->declare_parameter("kp", 1.0);
             this->declare_parameter("ki", 0.0);
             this->declare_parameter("kd", 0.1);
-            this->declare_parameter("resX", 680);
-            this->declare_parameter("resY", 480);
+            this->declare_parameter("resX", 680.0);
+            this->declare_parameter("resY", 480.0);
 
             kp_ = this->get_parameter("kp").as_double();
             ki_ = this->get_parameter("ki").as_double();
@@ -75,6 +75,11 @@ namespace anti_umbrella {
             double velX = kp_ * errorX + ki_ * sum_errorX_ + kd_ * (errorX - prev_errorX_);
 
             double velY = kp_ * errorY + ki_ * sum_errorY_ + kd_ * (errorY - prev_errorY_);
+
+            if (!apriltag_detected_) {
+                velX = 0;
+                velY = 0;
+            }
 
             //log the velx and velY
             RCLCPP_INFO(this->get_logger(), "VelX: %f, VelY: %f", velX, velY);
